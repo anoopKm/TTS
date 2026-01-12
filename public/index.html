@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text-to-Speech Converter</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎤 Text-to-Speech Converter</h1>
+            <p>Powered by Google Cloud Text-to-Speech API</p>
+        </header>
+
+        <main>
+            <div class="form-section">
+                <div class="form-group">
+                    <label for="textInput">Enter Text (up to 10,000 characters)</label>
+                    <textarea 
+                        id="textInput" 
+                        placeholder="Type or paste your text here..."
+                        maxlength="10000"
+                        rows="8"
+                    ></textarea>
+                    <div class="char-count">
+                        <span id="charCount">0</span> / 10,000 characters
+                    </div>
+                </div>
+
+                <div class="options-grid">
+                    <div class="form-group">
+                        <label for="languageCode">Language Code</label>
+                        <input type="text" id="languageCode" value="en-US" placeholder="e.g., en-US, es-ES, fr-FR">
+                        <small>ISO 639-1 language code (e.g., en-US, es-ES)</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="voiceName">Voice Name</label>
+                        <select id="voiceName">
+                            <option value="">Loading voices...</option>
+                        </select>
+                        <button type="button" id="loadVoicesBtn" class="btn-secondary">Refresh Voices</button>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="ssmlGender">Gender</label>
+                        <select id="ssmlGender">
+                            <option value="NEUTRAL">Neutral</option>
+                            <option value="FEMALE">Female</option>
+                            <option value="MALE">Male</option>
+                            <option value="SSML_VOICE_GENDER_UNSPECIFIED">Unspecified</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="audioEncoding">Audio Encoding</label>
+                        <select id="audioEncoding">
+                            <option value="MP3">MP3</option>
+                            <option value="LINEAR16">LINEAR16 (WAV)</option>
+                            <option value="OGG_OPUS">OGG Opus</option>
+                            <option value="MULAW">MULAW</option>
+                            <option value="ALAW">ALAW</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="speakingRate">Speaking Rate</label>
+                        <input type="range" id="speakingRate" min="0.25" max="4.0" step="0.1" value="1.0">
+                        <span id="speakingRateValue">1.0</span>
+                        <small>0.25 (slow) to 4.0 (fast)</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="pitch">Pitch</label>
+                        <input type="range" id="pitch" min="-20.0" max="20.0" step="0.1" value="0.0">
+                        <span id="pitchValue">0.0</span>
+                        <small>-20.0 (low) to 20.0 (high) semitones</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="volumeGainDb">Volume Gain (dB)</label>
+                        <input type="range" id="volumeGainDb" min="-96.0" max="16.0" step="0.1" value="0.0">
+                        <span id="volumeGainDbValue">0.0</span>
+                        <small>-96.0 to 16.0 decibels</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="sampleRateHertz">Sample Rate (Hz)</label>
+                        <select id="sampleRateHertz">
+                            <option value="">Default</option>
+                            <option value="8000">8000 Hz</option>
+                            <option value="16000">16000 Hz</option>
+                            <option value="22050">22050 Hz</option>
+                            <option value="24000">24000 Hz</option>
+                            <option value="32000">32000 Hz</option>
+                            <option value="44100">44100 Hz</option>
+                            <option value="48000">48000 Hz</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="button-group">
+                    <button id="synthesizeBtn" class="btn-primary">Generate Speech</button>
+                    <button id="downloadBtn" class="btn-secondary" disabled>Download Audio</button>
+                </div>
+            </div>
+
+            <div class="audio-section" id="audioSection" style="display: none;">
+                <h2>Generated Audio</h2>
+                <audio id="audioPlayer" controls></audio>
+            </div>
+
+            <div class="info-section">
+                <h2>Available Options</h2>
+                <div id="voicesInfo" class="info-box">
+                    <p>Loading available voices...</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div id="loadingOverlay" class="loading-overlay" style="display: none;">
+        <div class="spinner"></div>
+        <p>Generating speech...</p>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
