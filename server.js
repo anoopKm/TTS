@@ -12,7 +12,7 @@ app.use(express.json());
 app.use(express.static('public'));
 
 // Google Cloud TTS API configuration
-const GOOGLE_TTS_API_KEY = process.env.GOOGLE_TTS_API_KEY || 'AIzaSyCHwZFcn9riSSdSiRcshG7MuIh9W1sZzxo';
+const GOOGLE_TTS_API_KEY = process.env.GOOGLE_TTS_API_KEY || '';
 const GOOGLE_TTS_API_URL = 'https://texttospeech.googleapis.com/v1';
 
 // Get available voices
